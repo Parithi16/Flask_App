@@ -1,0 +1,4 @@
+flaskenv/
+test/
+__pycache__/
+*.pyc

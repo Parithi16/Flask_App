@@ -1,0 +1,118 @@
+
+body {
+  display: flex;
+  justify-content: center;  
+  align-items: center;      
+  height: 100vh;            
+  margin: 0;                
+}
+
+.Container{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid black;
+  padding:2px;
+  box-shadow: 1px;
+  width :500px;
+  margin: 50px;
+  background-color: aliceblue;
+
+}
+
+.uppercontainer{
+  display: flex;
+  flex-direction: column;
+  justify-content:space-around;
+  align-items:center;
+  padding: 2px;
+ 
+}
+
+.uppercontainer-form{
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+  
+}
+
+
+.form-name{
+padding: 2px;
+ margin-bottom: 10px;
+}
+.form-role{
+padding: 2px;
+ margin-bottom: 10px;
+}
+.form-button{
+padding: 5px 20px;
+margin-left: 5px;
+color: darkcyan;
+background-color: aliceblue;
+border:1px;
+}
+
+.form-button:hover{
+  background-color: darkcyan;
+  color:aliceblue;
+  border-radius: 10px;
+}
+.lowercontainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.lowercontainer-body{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.lowercontainer-body ul {
+  list-style: none; /* remove bullets */
+  padding: 0;
+  margin: 0;
+}
+
+.lowercontainer-body li {
+  display: flex;
+  justify-content: space-between; /* name left, buttons right */
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid #ccc; /* optional separator */
+}
+
+.lowercontainer-buttons button{
+  margin-left: 5px;
+  padding: 5px 10px;
+  border:1px;
+}
+
+.delete{
+  background-color: aliceblue;
+  color: red;
+}
+
+
+.edit{
+  background-color: aliceblue;
+  color: yellowgreen;
+}
+
+.edit:hover{
+  background-color: yellowgreen;
+  color:aliceblue;
+  border-radius: 10px;
+}
+
+.delete:hover{
+  background-color: red;
+  color: aliceblue;
+  border-radius: 10px;
+}
+
