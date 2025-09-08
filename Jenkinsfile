@@ -8,37 +8,10 @@ pipeline {
         BACKEND_IMAGE = "us-docker.pkg.dev/forward-fuze-468106-f4/gcr.io/flask-app"
         FRONTEND_IMAGE = "us-docker.pkg.dev/forward-fuze-468106-f4/gcr.io/frontend"
     }
-
     stages {
-
         stage('Checkout Code') {
             steps {
                 git branch: 'main', url: 'https://github.com/Parithi16/Flask_App.git'
-            }
-        }
-
-stage('Build Docker Images') {
-    steps {
-        script {
-            def COMMIT_HASH = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
-            sh """
-                docker build -t $BACKEND_IMAGE:$COMMIT_HASH ./backend
-                docker build -t $FRONTEND_IMAGE:$COMMIT_HASH ./frontend
-            """
-        }
-    }
-}
-
-        stage('Push Docker Images to GCR') {
-            steps {
-                withCredentials([file(credentialsId: 'gcp-sa-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                    sh """
-                        gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
-                        gcloud auth configure-docker
-                        docker push $BACKEND_IMAGE:$COMMIT_HASH
-                        docker push $FRONTEND_IMAGE:$COMMIT_HASH
-                    """
-                }
             }
         }
 
@@ -65,9 +38,9 @@ stage('Build Docker Images') {
         stage('Deploy to Kubernetes') {
             steps {
                 sh """
-                    # Update YAML files to use new image tags
-                    sed -i "s|image: gcr.io/.*/flask-app:.*|image: $BACKEND_IMAGE:$COMMIT_HASH|" deployments/flask-deployment.yaml
-                    sed -i "s|image: gcr.io/.*/frontend:.*|image: $FRONTEND_IMAGE:$COMMIT_HASH|" deployments/frontend-deployment.yaml
+                    # Optionally update YAML files if you need to change image tags
+                    sed -i "s|image: .*/flask-app:.*|image: $BACKEND_IMAGE|" deployments/flask-deployment.yaml
+                    sed -i "s|image: .*/frontend:.*|image: $FRONTEND_IMAGE|" deployments/frontend-deployment.yaml
 
                     # Apply manifests
                     kubectl apply -f deployments/postgres-secret.yaml
@@ -89,7 +62,7 @@ stage('Build Docker Images') {
 
     post {
         success {
-            echo "CI/CD pipeline finished successfully! Deployed commit $COMMIT_HASH"
+            echo "CI/CD pipeline finished successfully!"
         }
         failure {
             echo "Pipeline failed. Check the logs above."
