@@ -18,17 +18,22 @@ pipeline {
         }
 
         stage('Build Docker Images') {
-            steps {
-                script {
-                    // Use Git short hash as image tag
-                    def COMMIT_HASH = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
-                    sh """
-                        docker build -t $BACKEND_IMAGE:$COMMIT_HASH ./backend
-                        docker build -t $FRONTEND_IMAGE:$COMMIT_HASH ./frontend
-                    """
-                }
-            }
+    agent {
+        docker {
+            image 'docker:20.10.24-dind'
+            args '--privileged -v /var/run/docker.sock:/var/run/docker.sock'
         }
+    }
+    steps {
+        script {
+            def COMMIT_HASH = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+            sh """
+                docker build -t $BACKEND_IMAGE:$COMMIT_HASH ./backend
+                docker build -t $FRONTEND_IMAGE:$COMMIT_HASH ./frontend
+            """
+        }
+    }
+}
 
         stage('Push Docker Images to GCR') {
             steps {
