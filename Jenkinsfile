@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker { 
-            image 'google/cloud-sdk:alpine'  // gcloud pre-installed
-            args '-v /var/run/docker.sock:/var/run/docker.sock' // If building/pushing images
-        }
-    }
+    agent any
 
     environment {
         GCP_PROJECT = "forward-fuze-468106-f4"
