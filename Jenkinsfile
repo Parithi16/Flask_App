@@ -5,7 +5,7 @@ pipeline {
         GCP_PROJECT = "forward-fuze-468106-f4"
         GKE_CLUSTER = "flask-cluster"
         GKE_ZONE = "us-central1"
-        BACKEND_IMAGE = "us-docker.pkg.dev/forward-fuze-468106-f4/gcr.io//flask-app"
+        BACKEND_IMAGE = "us-docker.pkg.dev/forward-fuze-468106-f4/gcr.io/flask-app"
         FRONTEND_IMAGE = "us-docker.pkg.dev/forward-fuze-468106-f4/gcr.io/frontend"
     }
 
