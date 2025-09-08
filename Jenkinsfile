@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'docker:20.10.24-dind'
-            args '--privileged -v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any
 
     environment {
         GCP_PROJECT = "forward-fuze-468106-f4"
@@ -26,7 +21,7 @@ pipeline {
             steps {
                 script {
                     // Use Git short hash as image tag
-                    COMMIT_HASH = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+                    def COMMIT_HASH = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
                     sh """
                         docker build -t $BACKEND_IMAGE:$COMMIT_HASH ./backend
                         docker build -t $FRONTEND_IMAGE:$COMMIT_HASH ./frontend
