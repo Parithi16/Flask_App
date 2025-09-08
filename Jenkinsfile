@@ -17,13 +17,7 @@ pipeline {
             }
         }
 
-        stage('Build Docker Images') {
-    agent {
-        docker {
-            image 'docker:20.10.24-dind'
-            args '--privileged -v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+stage('Build Docker Images') {
     steps {
         script {
             def COMMIT_HASH = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
