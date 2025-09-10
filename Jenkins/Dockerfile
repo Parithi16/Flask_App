@@ -35,8 +35,9 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.c
     && rm -rf /var/lib/apt/lists/*
 
 # Allow Jenkins user to access Docker socket
-ARG DOCKER_GID=1001
-RUN groupadd -g ${DOCKER_GID} docker && usermod -aG docker jenkins
+ARG DOCKER_GID=999
+RUN groupmod -g ${DOCKER_GID} docker || groupadd -g ${DOCKER_GID} docker \
+    && usermod -aG docker jenkins
 
 
 # Switch back to Jenkins user
