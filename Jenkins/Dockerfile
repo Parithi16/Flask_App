@@ -31,7 +31,9 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.c
     | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list \
     && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg \
     | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add - \
-    && apt-get update && apt-get install -y google-cloud-sdk google-cloud-sdk-gke-gcloud-auth-plugin \
+    && apt-get update && apt-get install -y \
+       google-cloud-sdk \
+       google-cloud-sdk-gke-gcloud-auth-plugin \
     && rm -rf /var/lib/apt/lists/*
 
 # Allow Jenkins user to access Docker socket
