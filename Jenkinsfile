@@ -50,6 +50,7 @@ pipeline {
                         gcloud auth activate-service-account --key-file = $GOOGLE_APPLICATION_CREDENTIALS
                         gcloud config set project $GCP_PROJECT
                         gcloud container clusters get-credentials $GKE_CLUSTER --region $GKE_REGION --project $GCP_PROJECT
+                        export USE_GKE_GCLOUD_AUTH_PLUGIN=True
                         kubectl get nodes
                     """
                 }
