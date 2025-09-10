@@ -5,6 +5,7 @@ pipeline {
         GCP_PROJECT = "forward-fuze-468106-f4"
         GKE_CLUSTER = "flask-cluster"
         GKE_ZONE = "us-central1"
+        GKE_REGION="us-central1-a"
         BACKEND_IMAGE = "us-docker.pkg.dev/forward-fuze-468106-f4/gcr.io/flask-app"
         FRONTEND_IMAGE = "us-docker.pkg.dev/forward-fuze-468106-f4/gcr.io/frontend"
     }
@@ -46,9 +47,9 @@ pipeline {
             steps {
                 withCredentials([file(credentialsId: 'gcp-sa-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
                     sh """
-                        gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
+                        gcloud auth activate-service-account --key-file = $GOOGLE_APPLICATION_CREDENTIALS
                         gcloud config set project $GCP_PROJECT
-                        gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GCP_PROJECT
+                        gcloud container clusters get-credentials $GKE_CLUSTER --region $GKE_REGION --project $GCP_PROJECT
                         kubectl get nodes
                     """
                 }
